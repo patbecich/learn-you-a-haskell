@@ -23,7 +23,7 @@ boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
 boomBangs' xs = [ if xs < 10 then "BOOM!" else "BANG!" | odd xs]
 
 removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
-                        
+
 
 add :: Num a => a -> a -> a
 add x y = x + y
@@ -40,7 +40,7 @@ bmiTell bmi
 bar :: Integer -> Integer
 bar 3 = 3
 bar x = x + 1
-                      
+
 --factorial' :: Integer -> Integer
 --factorial' n = n * factorial' (n-1)
 --factorial' 1 = 1
@@ -66,12 +66,12 @@ addVectors a b = (fst a + fst b, snd a + snd b)
 
 addVectors' :: (Double, Double) -> (Double, Double) -> (Double, Double)
 addVectors' (x1, y1)(x2, y2) = (x1 + x2, y1 + y2)
-                               
+
 -- Chapter 4 "Hello Recursion"
 
 maximum' :: (Ord a) => [a] -> a
-maximum' [] = error "maximum of empty list!"
-maximum' [x] = x
+maximum' []     = error "maximum of empty list!"
+maximum' [x]    = x
 maximum' (x:xs) = max x (maximum' xs)
 
 replicate' :: Int -> a -> [a]
@@ -86,7 +86,7 @@ take' _[]       = []
 take' n (x:xs)  = x : take' (n-1) xs
 
 reverse' :: [a] -> [a]
-reverse' [] = []
+reverse' []     = []
 reverse' (x:xs) = reverse' xs ++ [x]
 
 elem' :: (Eq a) => a -> [a] -> Bool
@@ -101,3 +101,47 @@ quicksort (x:xs) =
     let smallerOrEqual = [a | a <- xs, a <= x]
         larger = [a | a <- xs, a > x]
     in quicksort smallerOrEqual ++ [x] ++ quicksort larger
+
+
+
+max' :: (Ord a) => a -> a -> Bool
+max' x y = x <= y
+
+--          • Could not deduce (Ord a) arising from a use of ‘<=’
+-- from the context: Num a
+-- max'' :: (Num a) => a -> a -> Bool
+-- max'' x y = x <= y
+
+max'' x y = x <= y
+
+funnyAdd :: (Num a) => a -> a -> a
+funnyAdd x y = x + 2 * y
+
+funcParameter :: (Int -> Int) -> Int
+funcParameter f = f 5
+
+addOne x = x+1
+
+applyFour :: (Int -> Int) -> Int
+applyFour f = f 4
+
+-- implicitly like this
+-- funcParameter' :: (Int -> Int) -> (Int -> Int)
+funcParameter' :: (Int -> Int) -> Int -> Int
+funcParameter' f x = f x
+
+funcParameter'' :: ((Int -> Int) -> Int) -> Int
+funcParameter'' f = f addOne
+
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _          = []
+zipWith' _ _ []          = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
+
+combineCharAndInt :: Char -> Int -> String
+combineCharAndInt c i = [c] ++ show i
+
+
+map' :: (a -> b) -> [a] -> [b]
+map' _ []     = []
+map' f (x:xs) = f x : map' f xs
