@@ -145,3 +145,16 @@ combineCharAndInt c i = [c] ++ show i
 map' :: (a -> b) -> [a] -> [b]
 map' _ []     = []
 map' f (x:xs) = f x : map' f xs
+
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (\acc x -> acc + x) 0 xs
+
+sum'' :: (Num a) => [a] -> [a]
+sum'' xs = scanl (\acc x -> acc + x) 0 xs
+
+reverse'' :: [a] -> [a]
+reverse'' xs = foldl (\acc x -> x:acc) []  xs
+
+reverse''' :: [a] -> [[a]]
+reverse''' xs = scanl (\acc x -> x:acc) []  xs
+
