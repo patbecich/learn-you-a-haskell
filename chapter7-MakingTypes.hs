@@ -1,4 +1,6 @@
-import qualified Data.Map as Map
+import           Data.Char
+import qualified Data.Map  as Map
+
 
 testFunction :: [a] -> [a]
 testFunction []     = []
@@ -181,6 +183,14 @@ treeElem x (Node a left right)
 
 data TrafficLight = Red | Yellow | Green
 
+data TestType = A | B | C
+
+testTypeNumber :: TestType -> Int
+testTypeNumber A = 1
+testTypeNumber B = 2
+testTypeNumber C = 3
+
+
 instance Eq TrafficLight where
   Red == Red = True
   Green == Green = True
@@ -249,3 +259,40 @@ instance Functor Tree where
 -- instance Functor (Either a) where
   -- fmap f (Right x) = Right (f x)
   -- fmap f (Left x) = Left x
+
+asciiCodes = [1..90]
+asciiLetters = fmap chr asciiCodes
+
+capitalA :: Maybe Char
+capitalA = fmap chr (Just 65)
+
+noCapitalA :: Maybe Char
+noCapitalA = fmap chr Nothing
+
+toCharacter :: Maybe Int -> Maybe Char
+toCharacter my = fmap chr my
+
+toCharacter' :: Maybe Int -> Maybe Char
+toCharacter' (Just i) = Just (chr i)
+toCharacter' Nothing  = Nothing
+
+toB :: (Int -> b) -> Maybe Int -> Maybe b
+toB f (Just i) = Just (f i)
+toB f Nothing  = Nothing
+
+aToB :: (a -> b) -> Maybe a -> Maybe b
+aToB f (Just i) = Just (f i)
+aToB f Nothing  = Nothing
+
+data Maybe' a = Just' a | Nothing' deriving (Show)
+
+maybeFoo :: Maybe' Int
+maybeFoo = Just' 65
+
+
+aToB' :: (a -> b) -> Maybe' a -> Maybe' b
+aToB' f (Just' i) = Just' (f i)
+aToB' f Nothing'  = Nothing'
+
+instance Functor Maybe' where
+  fmap f fa = aToB' f fa
